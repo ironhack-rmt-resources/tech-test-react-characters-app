@@ -1,14 +1,17 @@
 import axios from 'axios';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+
+import { Link, NavLink, Route, Routes } from 'react-router-dom';
 
 import './App.css';
+import CharacterDetails from './components/CharacterDetails';
 
 function App() {
 
   const apiURL = "https://ih-crud-api.herokuapp.com"
 
   const [characters, setCharacters] = useState(null);
+
 
   useEffect(() => {
     axios.get(apiURL + "/characters")
@@ -26,9 +29,7 @@ function App() {
       return(
         <section key={index} className="box">
           <h1>{characterDetails.name} </h1>
-          Occupation: {characterDetails.occupation} <br />
-          Weapon: {characterDetails.weapon} <br />
-          Debt: {characterDetails.debt ? "Yes" : "No"} <br />
+          <Link to={`/characters/${characterDetails.id}`}>More details</Link>
         </section>
       ) 
     });
@@ -37,12 +38,16 @@ function App() {
 
   return (
     <div className="App">
-      <h1>React Characters App</h1>
+      
+      <header>
+        <h1>React Characters App</h1>
+      </header>
 
-      { characters
-        ? renderCharacterList()
-        : "loading..."
-      }
+      <Routes>
+        <Route path='/' element={characters ? renderCharacterList() : <p>loading....</p>} />
+        <Route path='/characters/:characterId' element={<CharacterDetails />} />
+      </Routes>
+
 
     </div>
   );
