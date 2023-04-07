@@ -8,13 +8,11 @@ import CharacterDetails from './components/CharacterDetails';
 
 function App() {
 
-  const apiURL = "https://ih-crud-api.herokuapp.com"
-
   const [characters, setCharacters] = useState(null);
 
 
   useEffect(() => {
-    axios.get(apiURL + "/characters")
+    axios.get(process.env.REACT_APP_APIURL + "/characters")
       .then(response => {
         setCharacters(response.data);
       })

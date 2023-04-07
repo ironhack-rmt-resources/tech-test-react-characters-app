@@ -4,14 +4,12 @@ import axios from 'axios';
 
 function CharacterDetails(){
 
-    const apiURL = "https://ih-crud-api.herokuapp.com"
-
     const {characterId} = useParams();
 
     const [characterDetails, setCharacterDetails] = useState(null);
 
     useEffect(() => {
-        axios.get(`${apiURL}/characters/${characterId}`)
+        axios.get(`${process.env.REACT_APP_APIURL}/characters/${characterId}`)
             .then( response => {
                 setCharacterDetails(response.data)
             })
